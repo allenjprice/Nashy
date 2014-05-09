@@ -1,0 +1,12 @@
+div.sourceContainer {
+	float:left;
+	border: 1px solid black;
+	width: 40%;
+}
+
+div.destination {
+	float: right;
+	border: 1px solid black;
+	width: 40%;
+	padding-right: 10%;
+}
