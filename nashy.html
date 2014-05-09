@@ -12,7 +12,7 @@
 <script type="text/javascript">
 
 function processText(text){
-	result = "<div class='destination'>" + text + " has been processed. </div>";
+	result = text + " has been processed.";
 	console.log(result);
 	return result;
 }
@@ -21,7 +21,7 @@ $(document).ready(function(){
 
 	$('.processText').click(function(){
 
-		$('div.destination').replaceWith(processText($('.source').text()));
+		$('div.destination').text(processText($('.source').text()));
 		console.log("button clicked");
 
 	});
@@ -38,7 +38,7 @@ $(document).ready(function(){
 <h5>An app for lazy and/or brilliant musicians</h5>
 
 
-<div class="sourceContainer"><div class="source" contenteditable="true">Enter your here</div><br />
+<div class="sourceContainer"><div class="source" contenteditable="true">Enter your content here</div><br />
 <button class="processText">Change it up!</button></div>
 
 <div class="destination" style="border:1px solid black">And it shows up processed here</div>
