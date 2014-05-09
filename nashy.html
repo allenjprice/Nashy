@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>Nashy</title>
+</head>
+
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<script type="text/javascript">
+
+function processText(text){
+	result = "<div style='border: 1px solid black'>" + text + " has been processed. </div>";
+	console.log(result);
+	return result;
+}
+
+$(document).ready(function(){
+
+	$('.processText').click(function(){
+
+		$('div.destination').replaceWith(processText($('.source').val()));
+		console.log("button clicked");
+
+	});
+
+});
+
+</script>
+
+<body>
+
+<!--stuff and things-->
+
+<h1>Nashy</h1>
+<h5>An app for lazy and/or brilliant musicians</h5>
+
+<p>Here is the editable content</p>
+<textarea class="source" contenteditable="true" style="border: 1px solid black">Content here</textarea>
+<button class="processText">Change it up!</button>
+<hr />
+<p>Here is the processed content</p>
+<div class="destination" style="border:1px solid black">Content!</div>
+</body>
