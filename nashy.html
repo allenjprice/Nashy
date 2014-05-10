@@ -12,6 +12,7 @@
 <script type="text/javascript">
 
 function processText(text){
+	//actual processing coming soon.
 	result = text + " has been processed.";
 	console.log(result);
 	return result;
@@ -37,9 +38,29 @@ $(document).ready(function(){
 <h1>Nashy</h1>
 <h5>An app for lazy and/or brilliant musicians</h5>
 
+<div class = "key-select">
+	<label for="chooseKey">Choose Key:</label>
+	<select name="chooseKey" id="chooseKey">
+		<option>Numbers</option>
+		<option>C</option>
+		<option>C#/Db</option>
+		<option>D</option>
+		<option>D#/Eb</option>
+		<option>E</option>
+		<option>F</option>
+		<option>F#/Gb</option>
+		<option>G</option>
+		<option>G#/Ab</option>
+		<option>A</option>
+		<option>A#/Bb</option>
+		<option>B</option>
+	</select>
 
-<div class="sourceContainer"><div class="source" contenteditable="true">Enter your content here</div><br />
-<button class="processText">Change it up!</button></div>
+<label for="processText">Transpose:
+<button class="processText">Change it up!</button>
+</div>
+<div class="sourceContainer"><div class="source" contenteditable="true">Enter your content here</div>
+</div>
 
 <div class="destination" style="border:1px solid black">And it shows up processed here</div>
 </body>

@@ -5,6 +5,15 @@ div.sourceContainer {
 	font-family: sans-serif;
 }
 
+div.key-select{
+	display: block;
+	padding-bottom: 15px;
+}
+
+div.source:focus{
+	outline: 0;
+}
+
 div.destination {
 	float: right;
 	border: 1px solid black;
