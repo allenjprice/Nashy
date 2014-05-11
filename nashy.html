@@ -11,10 +11,39 @@
 
 <script type="text/javascript">
 
-function processText(text){
-	//actual processing coming soon.
-	result = text + " has been processed.";
-	console.log(result);
+var keys = {
+	c: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
+	cSharp: ['C#', 'D#', 'E#', 'F#', 'G#', 'A#', 'B#'],
+	d: ['D', 'E', 'F#', 'G', 'A', 'B', 'C#'],
+	dSharp: ['D#', 'E#', 'Fx', 'G#', 'A#', 'Bx', 'C#'],
+	eFlat: ['Eb', 'F', 'G', 'Ab', 'Bb', 'C', 'D'],
+	e: ['E', 'F#', 'G#', 'A', 'B', 'C#', 'D#'],
+	f: ['F', 'G', 'A', 'Bb', 'C', 'D', 'E'],
+	fSharp: ['F#', 'G#', 'A#', 'B', 'C#', 'D#', 'E#'],
+	gFlat: ['Gb', 'Ab', 'Bb', 'Cb', 'Db', 'Eb', 'F'],
+	g: ['G', 'A', 'B', 'C', 'D', 'E', 'F#'],
+	gSharp: ['G#', 'A#', 'Bx', 'C#', 'D#', 'E#', 'Fx'],
+	aFlat: ['Ab', 'Bb', 'C', 'Db', 'Eb', 'F'],
+	a: ['A', 'B', 'C#', 'D', 'E', 'F#', 'G#'],
+	aSharp: ['A#', 'B#', 'Cx', 'D#', 'E#', 'F#', 'Gx'],
+	bFlat: ['Bb', 'C', 'D', 'Eb', 'F', 'G', 'A'],
+	b: ['B', 'C#', 'D#', 'E', 'F#', 'G#', 'A#'],
+	numbers: ['1', '2', '3', '4', '5', '6', '7']
+}
+
+function processText(text, originalKey, destinationKey){
+	
+	var result = '';
+	
+	// use real regex for this later; this is super borken
+	for (var i=0; i<text.length; i++){
+		if (text[i] == '1' || text[i] == '2' || text[i] == '3' || text[i] == '4' || text[i] == '5' || text[i] == '6' || text[i] == '7' ){ 
+			result += keys[destinationKey][(text[i]-1)];
+		}
+		else
+			result += text[i];
+	}
+	
 	return result;
 }
 
@@ -22,8 +51,8 @@ $(document).ready(function(){
 
 	$('.processText').click(function(){
 
-		$('div.destination').text(processText($('.source').text()));
-		console.log("button clicked");
+		$('div.destination').text(processText($('.source').text(), $('#originalKey').val(), $('#destinationKey').val()));
+		
 
 	});
 
@@ -39,22 +68,39 @@ $(document).ready(function(){
 <h5>An app for lazy and/or brilliant musicians</h5>
 
 <div class = "key-select">
-	<label for="chooseKey">Choose Key:</label>
-	<select name="chooseKey" id="chooseKey">
-		<option>Numbers</option>
-		<option>C</option>
-		<option>C#/Db</option>
-		<option>D</option>
-		<option>D#/Eb</option>
-		<option>E</option>
-		<option>F</option>
-		<option>F#/Gb</option>
-		<option>G</option>
-		<option>G#/Ab</option>
-		<option>A</option>
-		<option>A#/Bb</option>
-		<option>B</option>
+	<label for="originalKey">Original Key:</label>
+	<select name="originalKey" id="originalKey">
+		<option value='0'>Numbers</option>
+		<option value='c'>C</option>
+		<option value='cSharp'>C#/Db</option>
+		<option value='d'>D</option>
+		<option value='eFlat'>D#/Eb</option>
+		<option value='e'>E</option>
+		<option value='f'>F</option>
+		<option value='fSharp'>F#/Gb</option>
+		<option value='g'>G</option>
+		<option value='aFlat'>G#/Ab</option>
+		<option value='a'>A</option>
+		<option value='bFlat'>A#/Bb</option>
+		<option value='b'>B</option>
 	</select>
+	<label for="destinationKey">Original Key:</label>
+	<select name="destinationKey" id="destinationKey">
+		<option value='0'>Numbers</option>
+		<option value='c'>C</option>
+		<option value='cSharp'>C#/Db</option>
+		<option value='d'>D</option>
+		<option value='eFlat'>D#/Eb</option>
+		<option value='e'>E</option>
+		<option value='f'>F</option>
+		<option value='fSharp'>F#/Gb</option>
+		<option value='g'>G</option>
+		<option value='aFlat'>G#/Ab</option>
+		<option value='a'>A</option>
+		<option value='bFlat'>A#/Bb</option>
+		<option value='b'>B</option>
+	</select>
+
 
 <label for="processText">Transpose:
 <button class="processText">Change it up!</button>
