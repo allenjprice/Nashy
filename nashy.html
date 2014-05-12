@@ -34,14 +34,46 @@ var keys = {
 function processText(text, originalKey, destinationKey){
 	
 	var result = '';
-	
-	// use real regex for this later; this is super borken
+
 	for (var i=0; i<text.length; i++){
-		if (text[i] == '1' || text[i] == '2' || text[i] == '3' || text[i] == '4' || text[i] == '5' || text[i] == '6' || text[i] == '7' ){ 
-			result += keys[destinationKey][(text[i]-1)];
-		}
-		else
-			result += text[i];
+		var character = text[i];
+		
+		if (text[i] === keys[originalKey][0] || text[i] === keys[originalKey][1] || text[i] === keys[originalKey][2] || text[i] === keys[originalKey][3] || text[i] === keys[originalKey][4] || text[i] === keys[originalKey][5] || text[i] === keys[originalKey][6] || text[i] === keys[originalKey][7] ){
+				switch (text[i]){
+					case keys[originalKey][0]:
+						result += keys[destinationKey][0];
+						break;
+					case keys[originalKey][1]:
+						result += keys[destinationKey][1];
+						break;
+					case keys[originalKey][2]:
+						result += keys[destinationKey][2];
+						break;
+					case keys[originalKey][3]:
+						result += keys[destinationKey][3];
+						break;
+					case keys[originalKey][4]:
+						result += keys[destinationKey][4];
+						break;							
+					case keys[originalKey][5]:
+						result += keys[destinationKey][5];
+						break;
+					case keys[originalKey][6]:
+						result += keys[destinationKey][6];
+						break;
+					case keys[originalKey][7]:
+						result += keys[destinationKey][7];
+						break;	
+					}
+				}
+				else
+					result += text[i];
+		// if (text[i] === keys[originalKey][0] || text[i] === keys[originalKey][1] || text[i] === keys[originalKey][2] || text[i] === keys[originalKey][3] || text[i] === keys[originalKey][4] || text[i] === keys[originalKey][5] || text[i] === keys[originalKey][6] || text[i] === keys[originalKey][7] ){ 
+		// 	console.log(keys[originalKey][0]);
+		// 	result += keys[destinationKey][(text[i]-1)];
+		// }
+		// else
+		// 	result += text[i];
 	}
 	
 	return result;
@@ -52,8 +84,6 @@ $(document).ready(function(){
 	$('.processText').click(function(){
 
 		$('div.destination').text(processText($('.source').text(), $('#originalKey').val(), $('#destinationKey').val()));
-		
-
 	});
 
 });
@@ -70,8 +100,8 @@ $(document).ready(function(){
 <div class = "key-select">
 	<label for="originalKey">Original Key:</label>
 	<select name="originalKey" id="originalKey">
-		<option value='0'>Numbers</option>
-		<option value='c'>C</option>
+		<option value='numbers'>Numbers</option>
+		<option value='c' selected='selected'>C</option>
 		<option value='cSharp'>C#/Db</option>
 		<option value='d'>D</option>
 		<option value='eFlat'>D#/Eb</option>
@@ -84,12 +114,12 @@ $(document).ready(function(){
 		<option value='bFlat'>A#/Bb</option>
 		<option value='b'>B</option>
 	</select>
-	<label for="destinationKey">Original Key:</label>
+	<label for="destinationKey">Destination Key:</label>
 	<select name="destinationKey" id="destinationKey">
-		<option value='0'>Numbers</option>
+		<option value='numbers'>Numbers</option>
 		<option value='c'>C</option>
 		<option value='cSharp'>C#/Db</option>
-		<option value='d'>D</option>
+		<option value='d' selected='selected'>D</option>
 		<option value='eFlat'>D#/Eb</option>
 		<option value='e'>E</option>
 		<option value='f'>F</option>
@@ -105,7 +135,7 @@ $(document).ready(function(){
 <label for="processText">Transpose:
 <button class="processText">Change it up!</button>
 </div>
-<div class="sourceContainer"><div class="source" contenteditable="true">Enter your content here</div>
+<div class="sourceContainer"><div class="source" contenteditable="true">C D E F G A B</div>
 </div>
 
 <div class="destination" style="border:1px solid black">And it shows up processed here</div>
