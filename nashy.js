@@ -1,4 +1,3 @@
-
 var keys = {
 	c: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
 	cSharp: ['C#', 'D#', 'E#', 'F#', 'G#', 'A#', 'B#'],
@@ -25,44 +24,39 @@ function processText(text, originalKey, destinationKey){
 
 	for (var i=0; i<text.length; i++){
 		var character = text[i];
-		
-		if (text[i] === keys[originalKey][0] || text[i] === keys[originalKey][1] || text[i] === keys[originalKey][2] || text[i] === keys[originalKey][3] || text[i] === keys[originalKey][4] || text[i] === keys[originalKey][5] || text[i] === keys[originalKey][6] || text[i] === keys[originalKey][7] ){
-				switch (text[i]){
-					case keys[originalKey][0]:
-						result += keys[destinationKey][0];
-						break;
-					case keys[originalKey][1]:
-						result += keys[destinationKey][1];
-						break;
-					case keys[originalKey][2]:
-						result += keys[destinationKey][2];
-						break;
-					case keys[originalKey][3]:
-						result += keys[destinationKey][3];
-						break;
-					case keys[originalKey][4]:
-						result += keys[destinationKey][4];
-						break;							
-					case keys[originalKey][5]:
-						result += keys[destinationKey][5];
-						break;
-					case keys[originalKey][6]:
-						result += keys[destinationKey][6];
-						break;
-					case keys[originalKey][7]:
-						result += keys[destinationKey][7];
-						break;	
-					}
+		var reNotes = new RegExp("([A-G])");
+
+		if (text[i].match(reNotes)){
+			switch (text[i]){
+				case keys[originalKey][0]:
+					result += keys[destinationKey][0];
+					break;
+				case keys[originalKey][1]:
+					result += keys[destinationKey][1];
+					break;
+				case keys[originalKey][2]:
+					result += keys[destinationKey][2];
+					break;
+				case keys[originalKey][3]:
+					result += keys[destinationKey][3];
+					break;
+				case keys[originalKey][4]:
+					result += keys[destinationKey][4];
+					break;							
+				case keys[originalKey][5]:
+					result += keys[destinationKey][5];
+					break;
+				case keys[originalKey][6]:
+					result += keys[destinationKey][6];
+					break;
+				case keys[originalKey][7]:
+					result += keys[destinationKey][7];
+					break;	
 				}
-				else
-					result += text[i];
-		// if (text[i] === keys[originalKey][0] || text[i] === keys[originalKey][1] || text[i] === keys[originalKey][2] || text[i] === keys[originalKey][3] || text[i] === keys[originalKey][4] || text[i] === keys[originalKey][5] || text[i] === keys[originalKey][6] || text[i] === keys[originalKey][7] ){ 
-		// 	console.log(keys[originalKey][0]);
-		// 	result += keys[destinationKey][(text[i]-1)];
-		// }
-		// else
-		// 	result += text[i];
-	}
+			}
+			else
+				result += text[i];
+	 }
 	
 	return result;
 }
