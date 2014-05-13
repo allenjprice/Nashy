@@ -18,6 +18,10 @@ var keys = {
 	numbers: ['1', '2', '3', '4', '5', '6', '7']
 }
 
+function findNextToken(token, index, text){
+	return text.indexOf(token, index);
+}
+
 function processText(text, originalKey, destinationKey){
 	
 	var result = '';
@@ -25,6 +29,21 @@ function processText(text, originalKey, destinationKey){
 	for (var i=0; i<text.length; i++){
 		var character = text[i];
 		var reNotes = new RegExp("([A-G])");
+
+		if (text[i] == '<'){
+			var endDiamond = findNextToken('>', i, text);
+			//do something to mark the diamonds
+		}
+
+		if (text[i] == '_'){
+			var endUnderscore = findNextToken('_', i, text);
+			//do something to mark the split bars
+		}
+
+		if (text[i] == '['){
+			var endBracket = findNextToken(']', i, text);
+			//do something to mark section names and ignore transposition
+		}
 
 		if (text[i].match(reNotes)){
 			switch (text[i]){
