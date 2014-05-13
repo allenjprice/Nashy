@@ -1,6 +1,7 @@
 var keys = {
 	c: ['C', 'D', 'E', 'F', 'G', 'A', 'B'],
 	cSharp: ['C#', 'D#', 'E#', 'F#', 'G#', 'A#', 'B#'],
+	dFlat: ['Db', 'Eb', 'F', 'Gb', 'Ab', 'Bb', 'C'],
 	d: ['D', 'E', 'F#', 'G', 'A', 'B', 'C#'],
 	dSharp: ['D#', 'E#', 'Fx', 'G#', 'A#', 'Bx', 'C#'],
 	eFlat: ['Eb', 'F', 'G', 'Ab', 'Bb', 'C', 'D'],
@@ -60,9 +61,10 @@ function processText(text, originalKey, destinationKey){
 		var character = text[i];
 		var reNotes = new RegExp("([A-G])");
 		var reSharpsAndFlats = new RegExp("[A-G]#|[A-G]b");
-		var reNumbersOnly = new RegExp("[1-7]");
+		var reNumbersOnly = new RegExp("([1-7])");
+		var reNumbersTo9 = new RegExp("([1-9])");
 		var reNumbersWithTones = new RegExp("[1-7][1-9]|[A-G][1-9]"); //4ths, 7ths, 2nds, etc
-		var reOtherTokens = new RegExp(""); // regex wizardry
+		var reAddTonesAfterLetters = new RegExp("[msdg][1-9]|[msdg][1-9][0-3]"); //sus4, dim7, add13, etc
 
 		if (text[i] == '<'){
 			var endDiamond = findNextToken('>', i, text);
@@ -86,12 +88,13 @@ function processText(text, originalKey, destinationKey){
 			i+=2; // skip over the sharp or flat
 		}
 
-		if (text[i].match(reNumbersOnly)){
+		if (text[i].match(reNotes)){
 			result += transpose(text[i], keys[originalKey], keys[destinationKey]);
 		}
 
-		if (text[i].match(reNotes)){
+		if (text[i].match(reNumbersOnly)){
 			result += transpose(text[i], keys[originalKey], keys[destinationKey]);
+			// need to handle numbers with tones after them. also numbers after dim,sus,add, etc
 		}
 
 		else
