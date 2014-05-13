@@ -23,9 +23,6 @@ function findNextToken(token, index, text){
 }
 
 function transpose(chord, originalKey, destinationKey){
-	console.log("chord: " + chord);
-	console.log("originalKey: " + originalKey);
-	console.log("destinationKey: " + destinationKey);
 	switch (chord){
 		case originalKey[0]:
 			return destinationKey[0];
@@ -63,9 +60,9 @@ function processText(text, originalKey, destinationKey){
 		var character = text[i];
 		var reNotes = new RegExp("([A-G])");
 		var reSharpsAndFlats = new RegExp("[A-G]#|[A-G]b");
-		var addedTones = new RegExp("[1-7][1-9]|[A-G][1-9]"); //4ths, 7ths, 2nds, etc
+		var reNumbersOnly = new RegExp("[1-7]");
+		var reNumbersWithTones = new RegExp("[1-7][1-9]|[A-G][1-9]"); //4ths, 7ths, 2nds, etc
 		var reOtherTokens = new RegExp(""); // regex wizardry
-		var processNote = true;
 
 		if (text[i] == '<'){
 			var endDiamond = findNextToken('>', i, text);
@@ -79,48 +76,24 @@ function processText(text, originalKey, destinationKey){
 
 		if (text[i] == '['){
 			var endBracket = findNextToken(']', i, text);
-			//do something to mark section names and ignore transposition
+			//mark section names and ignore transposition
 			result += text.slice(i, endBracket);
+			i = endBracket;
 		}
 
 		if (text.slice(i, i+2).match(reSharpsAndFlats)){
-			console.log("sliced chord: " + text.slice(i, i+2))
 			result += transpose(text.slice(i, i+2), keys[originalKey], keys[destinationKey]);
 			i+=2; // skip over the sharp or flat
+		}
+
+		if (text[i].match(reNumbersOnly)){
+			result += transpose(text[i], keys[originalKey], keys[destinationKey]);
 		}
 
 		if (text[i].match(reNotes)){
 			result += transpose(text[i], keys[originalKey], keys[destinationKey]);
 		}
 
-		// if (text[i].match(reNotes) && processNote){
-		// 	switch (text[i]){
-		// 		case keys[originalKey][0]:
-		// 			result += keys[destinationKey][0];
-		// 			break;
-		// 		case keys[originalKey][1]:
-		// 			result += keys[destinationKey][1];
-		// 			break;
-		// 		case keys[originalKey][2]:
-		// 			result += keys[destinationKey][2];
-		// 			break;
-		// 		case keys[originalKey][3]:
-		// 			result += keys[destinationKey][3];
-		// 			break;
-		// 		case keys[originalKey][4]:
-		// 			result += keys[destinationKey][4];
-		// 			break;							
-		// 		case keys[originalKey][5]:
-		// 			result += keys[destinationKey][5];
-		// 			break;
-		// 		case keys[originalKey][6]:
-		// 			result += keys[destinationKey][6];
-		// 			break;
-		// 		case keys[originalKey][7]:
-		// 			result += keys[destinationKey][7];
-		// 			break;	
-		// 		}
-		// 	}
 		else
 			result += text[i];
 	 }
