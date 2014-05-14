@@ -54,7 +54,7 @@ function transpose(chord, originalKey, destinationKey){
 }
 
 function processText(text, originalKey, destinationKey){
-	
+
 	var result = '';
 
 	for (var i=0; i<text.length; i++){
@@ -100,7 +100,7 @@ function processText(text, originalKey, destinationKey){
 		else
 			result += text[i];
 	 }
-	
+
 	return result;
 }
 
