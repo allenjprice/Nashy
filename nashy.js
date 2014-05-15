@@ -52,19 +52,19 @@ function transpose(chord, originalKey, destinationKey){
 
 	}
 }
-
+	
 function processText(text, originalKey, destinationKey){
 
 	var result = '';
+	var reNotes = new RegExp("([A-G])");
+	var reSharpsAndFlats = new RegExp("[A-G]#|[A-G]b");
+	var reNumbersOnly = new RegExp("([1-7])");
+	var reNumbersTo9 = new RegExp("([1-9])");
+	var reNumbersWithTones = new RegExp("[1-7][1-9]|[A-G][1-9]"); //4ths, 7ths, 2nds, etc
+	var reAddTonesAfterLetters = new RegExp("[msdg][1-9]|[msdg][1-9][0-3]"); //sus4, dim7, add13, etc
 
 	for (var i=0; i<text.length; i++){
 		var character = text[i];
-		var reNotes = new RegExp("([A-G])");
-		var reSharpsAndFlats = new RegExp("[A-G]#|[A-G]b");
-		var reNumbersOnly = new RegExp("([1-7])");
-		var reNumbersTo9 = new RegExp("([1-9])");
-		var reNumbersWithTones = new RegExp("[1-7][1-9]|[A-G][1-9]"); //4ths, 7ths, 2nds, etc
-		var reAddTonesAfterLetters = new RegExp("[msdg][1-9]|[msdg][1-9][0-3]"); //sus4, dim7, add13, etc
 
 		if (text[i] == '<'){
 			var endDiamond = findNextToken('>', i, text);
