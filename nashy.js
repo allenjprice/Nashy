@@ -101,7 +101,7 @@ function processText(text, originalKey, destinationKey){
 			result += text[i];
 	 }
 
-	return result;
+	return result; 
 }
 
 $(document).ready(function(){
