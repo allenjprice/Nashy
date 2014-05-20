@@ -51,21 +51,61 @@ function findChordByName(chord){
   }
 }
 
+//exactly what it says on the tin
 function getInterval(original, destination){
   console.log("getInterval original: " + original);
   console.log("getInterval destination: " + destination);
   return original - destination;
 }
 
-//given a chord
+
+//hard-coded values because the semitone pattern won't ever change
+//only call from getDiatonicScale for now; it can't wraparound for intervals larger than 2
+function advanceIndex(index, interval){
+  console.log("advanceIndex hit")
+  if(index === 11){
+    if (interval === 2)
+      return 1;
+    else
+      return 13;
+  }
+  else if (index === 12){
+    if (interval === 2)
+      return 2;
+    else
+      return 1;
+  }
+  else
+    return index + interval;
+}
+
+//given a key, output an object containing the major scale for that key
+function getDiatonicScale(key){
+  //use interval pattern to derive scale: WWhWWWh
+  var pitchIndex = findChordByName(key);
+  var scale = {};
+
+  for(var i=1; i<8; i++){
+    scale['_' + i] = pitches['_' + pitchIndex];
+    if (i === 3){
+      pitchIndex = advanceIndex(pitchIndex, 1);
+    }
+    else{
+      pitchIndex = advanceIndex(pitchIndex, 2);
+    }
+  }
+  return scale;
+}
+
+//given a chord name, transpose it from original key to destination key.
 function transposeChord(chord, original, destination){
   var chordIndex = findChordByName(chord);
   var originalIndex = findChordByName(original);
   var destinationIndex = findChordByName(destination);
-  console.log("transposeChord chord: " + chord + " and chordIndex: " + chordIndex);
+  //console.log("transposeChord chord: " + chord + " and chordIndex: " + chordIndex);
   var interval = getInterval(originalIndex, destinationIndex);
   var invertedInterval = interval + 12;
-  console.log("interval: " + interval + "   invertedInterval: " + invertedInterval);
+  //console.log("interval: " + interval + "   invertedInterval: " + invertedInterval);
 
   var result = pitches['_' + (chordIndex - interval)];
   //if the result is undefined, invert the interval
@@ -75,80 +115,4 @@ function transposeChord(chord, original, destination){
   
   return result;
 }
-
-console.log(transposeChord('C', 'C', 'C#'));
-console.log(transposeChord('D', 'C', 'C#'));
-console.log(transposeChord('E', 'C', 'C#'));
-console.log(transposeChord('F', 'C', 'C#'));
-console.log(transposeChord('G', 'C', 'C#'));
-console.log(transposeChord('A', 'C', 'C#'));
-console.log(transposeChord('B', 'C', 'C#'));
-console.log(transposeChord('Bb', 'C', 'C#'));
-console.log(transposeChord('Ab', 'C', 'C#'));
-console.log(transposeChord('Eb', 'C', 'C#'));
-//old code - let's revisit this
-// function findNextToken(token, index, text){
-//   return text.indexOf(token, index);
-// }
-  
-// function processText(text, originalKey, destinationKey){
-
-//   var result = '';
-//   var reNotes = new RegExp("([A-G])");
-//   var reSharpsAndFlats = new RegExp("[A-G]#|[A-G]b");
-//   var reNumbersOnly = new RegExp("([1-7])");
-//   var reNumbersTo9 = new RegExp("([1-9])");
-//   var reNumbersWithTones = new RegExp("[1-7][1-9]|[A-G][1-9]"); //4ths, 7ths, 2nds, etc
-//   var reAddTonesAfterLetters = new RegExp("[msdg][1-9]|[msdg][1-9][0-3]"); //sus4, dim7, add13, etc
-
-//   for (var i=0; i<text.length; i++){
-//     var character = text[i];
-
-//     if (text[i] == '<'){
-//       var endDiamond = findNextToken('>', i, text);
-//       //do something to mark the diamonds
-//     }
-
-//     if (text[i] == '_'){
-//       var endUnderscore = findNextToken('_', i, text);
-//       //do something to mark the split bars
-//     }
-
-//     if (text[i] == '['){
-//       var endBracket = findNextToken(']', i, text);
-//       //mark section names and ignore transposition
-//       result += text.slice(i, endBracket);
-//       i = endBracket;
-//     }
-
-//     if (text.slice(i, i+2).match(reSharpsAndFlats)){
-//       result += transposeChord(text.slice(i, i+2), pitches[originalKey], pitches[destinationKey]);
-//       i+=2; // skip over the sharp or flat
-//     }
-
-//     if (text[i].match(reNotes)){
-//       result += transposeChord(text[i], pitches[originalKey], pitches[destinationKey]);
-//     }
-
-//     if (text[i].match(reNumbersOnly)){
-//       result += transposeChord(text[i], pitches[originalKey], pitches[destinationKey]);
-//       // need to handle numbers with tones after them. also numbers after dim,sus,add, etc
-//     }
-
-//     else
-//       result += text[i];
-//    }
-
-//   return result; 
-// }
-
-// $(document).ready(function(){
-
-//   $('.processText').click(function(){
-
-//     $('div.destination').text(processText($('.source').text(), $('#originalKey').val(), $('#destinationKey').val()));
-//   });
-
-// });
-
 
