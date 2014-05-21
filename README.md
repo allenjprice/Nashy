@@ -1,6 +1,6 @@
 Nashy
 =====
 
-An markup format for musicians using the Nashville Numbering system.
+A tool for musicians to easily create chord charts, then transpose them into any key.
 
 A work very-much in progress.
