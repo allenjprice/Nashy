@@ -38,6 +38,7 @@ pitches['_12'] = ['B', 'Cb'];
     // pitches['gDoubleSharp'] = pitches._10[1];
     // pitches['bFlat'] = pitches._11[1];
     // pitches['cFlat'] = pitches._12[1];
+     
 
 //search through the pitches object for the given chord, return its "index" in the chord dictionary
 function findChordByName(chord){
@@ -54,7 +55,7 @@ function findChordByName(chord){
 //hard-coded values because the semitone pattern won't ever change
 //only call from getDiatonicScale for now; it can't wraparound for intervals larger than 2
 function advanceIndex(index, interval){
-  console.log("advanceIndex hit")
+  
   if(index === 11){
     if (interval === 2)
       return 1;
@@ -90,7 +91,7 @@ function getDiatonicScale(key){
 }
 
 //given a chord name, transpose it from original key to destination key.
-function transposeChord(chord, original, destination){
+function transpose(chord, original, destination){
   var chordIndex = findChordByName(chord);
   var interval = original - destination;
   var invertedInterval = interval + 12;
@@ -99,8 +100,27 @@ function transposeChord(chord, original, destination){
   if (!result){
     result = pitches['_' + (chordIndex - invertedInterval)];
   }
-  
-  return "[" + result[0] + "]";
+  console.log("transpose.result: " + result);
+  return result[0];
+}
+
+function processChord(chord, original, destination){
+  var processed = '';
+  if(chord[1] === '#' || chord[1] === 'b'){
+    processed += transpose(chord.slice(0,2), original, destination);
+  }
+  else
+    processed += transpose(chord[0], original, destination);
+
+  for(var i=processed.length; i<chord.length; i++){
+    if (chord[i] === '/')
+      processed += '/' + transpose(chord[i+1]);
+    else
+      processed += chord[i];
+  }
+
+  return processed;
+
 }
 
 function findNextToken(token, index, text){
@@ -119,7 +139,7 @@ function processText(text, originalKey, destinationKey){
       }
 
       var endBracket = findNextToken(']', i, text);
-      chordLine += transposeChord(text.slice(i+1, endBracket), originalKey, destinationKey);
+      chordLine += processChord(text.slice(i+1, endBracket), originalKey, destinationKey);
       i = endBracket;
     }
     else
@@ -127,9 +147,7 @@ function processText(text, originalKey, destinationKey){
 
   }
 
-  var result = chordLine + '\n' + lyricLine + '\n';
-  console.log(result);
-  return result;
+  return result = chordLine + '\n' + lyricLine + '\n';
 }
 
 $.fn.multiline = function(text){
