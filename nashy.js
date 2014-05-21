@@ -108,14 +108,14 @@ function findNextToken(token, index, text){
 }
 
 function processText(text, originalKey, destinationKey){
-  var result = '';
+  
   var chordLine = '';
   var lyricLine = '';
 
   for (var i=0; i<text.length; i++){
     if (text[i] == '['){
       for(var j=0; j<i; j++){
-        chordLine += '+'
+        chordLine += ' '
       }
 
       var endBracket = findNextToken(']', i, text);
@@ -127,15 +127,21 @@ function processText(text, originalKey, destinationKey){
 
   }
 
-  result = chordLine + '<br>' + lyricLine;
+  var result = chordLine + '\n' + lyricLine + '\n';
   console.log(result);
   return result;
+}
+
+$.fn.multiline = function(text){
+  this.text(text);
+  this.html(this.html().replace(/\n/g, '<br />'));
+  return this;
 }
 
 $(document).ready(function(){
     $('.processText').click(function(){
 
-    $('div.destination').text(processText($('.source').text(), $('#originalKey').val(), $('#destinationKey').val()));
+    $('div.destination').multiline(processText($('.source').val(), $('#originalKey').val(), $('#destinationKey').val()));
   });
 });
 

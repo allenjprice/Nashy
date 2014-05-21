@@ -1,10 +1,12 @@
 div.sourceContainer {
 	float:left;
-	border: 1px solid black;
 	width: 40%;
 	font-family: sans-serif;
 }
-
+textarea.source {
+	font-family: monospace;
+	border: 1px dashed black;
+}
 div.key-select{
 	display: block;
 	padding-bottom: 15px;
@@ -19,4 +21,5 @@ div.destination {
 	border: 1px solid black;
 	width: 40%;
 	padding-right: 10%;
+	font-family: monospace;
 }
