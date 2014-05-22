@@ -1,17 +1,17 @@
-var pitches = {};
-//pitch dictionary via numerical index. not zero based. I might regret that.
-pitches['_1'] = ['C', 'B#'];
-pitches['_2'] = ['C#', 'Db'];
-pitches['_3'] = ['D', 'C*'];
-pitches['_4'] = ['D#', 'Eb'];
-pitches['_5'] = ['E', 'Fb'];
-pitches['_6'] = ['F', 'E#'];
-pitches['_7'] = ['F#', 'Gb'];
-pitches['_8'] = ['G', 'F*'];
-pitches['_9'] = ['G#', 'Ab'];
-pitches['_10'] = ['A', 'G*'];
-pitches['_11'] = ['A#', 'Bb'];
-pitches['_12'] = ['B', 'Cb'];
+  var pitches = {};
+  //pitch dictionary via numerical index. not zero based. I might regret that.
+  pitches['_1'] = ['C', 'B#'];
+  pitches['_2'] = ['C#', 'Db'];
+  pitches['_3'] = ['D', 'C*'];
+  pitches['_4'] = ['D#', 'Eb'];
+  pitches['_5'] = ['E', 'Fb'];
+  pitches['_6'] = ['F', 'E#'];
+  pitches['_7'] = ['F#', 'Gb'];
+  pitches['_8'] = ['G', 'F*'];
+  pitches['_9'] = ['G#', 'Ab'];
+  pitches['_10'] = ['A', 'G*'];
+  pitches['_11'] = ['A#', 'Bb'];
+  pitches['_12'] = ['B', 'Cb'];
     // //all the pitches?
     // pitches['c'] = pitches._1[0];
     // pitches['cSharp'] = pitches._2[0];
@@ -39,7 +39,6 @@ pitches['_12'] = ['B', 'Cb'];
     // pitches['bFlat'] = pitches._11[1];
     // pitches['cFlat'] = pitches._12[1];
      
-
 function processText(text, original, destination){
 
   //search through the pitches object for the given chord, return its "index" in the chord dictionary
@@ -139,32 +138,34 @@ function processText(text, original, destination){
     return text.indexOf(token, index);
   }
 
-  var chordLine = '';
-  var lyricLine = '';
+  function processLine(line){
+    var chordLine = '';
+    var lyricLine = '';
 
-  for (var i=0; i<text.length; i++){
-    if (text[i] == '['){
-      for(var j=0; j<i; j++){
-        chordLine += ' '
+    for (var lineIdx = 0; lineIdx < line.length; lineIdx++){
+      if (line[lineIdx] === '['){
+        for(var spaces=0; spaces<lineIdx; spaces++){
+          chordLine += '-';
+        }
+
+        var endBracket = findNextToken(']', lineIdx, line);
+        chordLine += processChord(line.slice(lineIdx+1, endBracket));
+        lineIdx = endBracket;
       }
-
-      var endBracket = findNextToken(']', i, text);
-      chordLine += processChord(text.slice(i+1, endBracket));
-      i = endBracket;
+      else
+        lyricLine += line[lineIdx];
     }
-    else
-      lyricLine += text[i];
-
+    return chordLine + '\n' + lyricLine + '\n';
   }
-
-  return result = chordLine + '\n' + lyricLine + '\n';
+//actual main function code. finally.
+  var lines = text.split('\n');
+  var finalAnswer = '';
+  for (var i=0; i<lines.length; i++){
+    finalAnswer += processLine(lines[i]);
+  }
+  return finalAnswer;
+  //return processLine("[C]Your mom is a [G]cow.");
 }
-
-// $.fn.multiline = function(text){
-//   this.text(text);
-//   this.html(this.html().replace(/\n/g, '<br />'));
-//   return this;
-// }
 
 $(document).ready(function(){
     $('.processText').click(function(){
