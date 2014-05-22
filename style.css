@@ -16,7 +16,7 @@ div.source:focus{
 	outline: 0;
 }
 
-div.destination {
+.destination {
 	float: right;
 	border: 1px solid black;
 	width: 40%;

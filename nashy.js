@@ -149,7 +149,7 @@ function processText(text, original, destination){
       }
 
       var endBracket = findNextToken(']', i, text);
-      chordLine += processChord(text.slice(i+1, endBracket), original, destination);
+      chordLine += processChord(text.slice(i+1, endBracket));
       i = endBracket;
     }
     else
@@ -160,16 +160,17 @@ function processText(text, original, destination){
   return result = chordLine + '\n' + lyricLine + '\n';
 }
 
-$.fn.multiline = function(text){
-  this.text(text);
-  this.html(this.html().replace(/\n/g, '<br />'));
-  return this;
-}
+// $.fn.multiline = function(text){
+//   this.text(text);
+//   this.html(this.html().replace(/\n/g, '<br />'));
+//   return this;
+// }
 
 $(document).ready(function(){
     $('.processText').click(function(){
 
-    $('div.destination').multiline(processText($('.source').val(), $('#originalKey').val(), $('#destinationKey').val()));
+    $('.destination').val(processText($('.source').val(), $('#originalKey').val(), $('#destinationKey').val()));
+    // $('.destination').multiline(processText($('.source').val(), $('#originalKey').val(), $('#destinationKey').val()));
   });
 });
 
