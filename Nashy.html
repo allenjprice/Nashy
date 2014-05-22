@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>Nashy</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="nashy.js" type="text/javascript"> </script>
+
+<body>
+
+<h1>Nashy</h1>
+<h5>An app for lazy and/or brilliant musicians</h5>
+
+<div class = "key-select">
+	<label for="originalKey">Original Key:</label>
+	<select name="originalKey" id="originalKey">
+		<!-- <option value='numbers'>Numbers</option> -->
+		<option value='1' selected='selected'>C</option>
+		<option value='2'>C#</option>
+    <option value='2'>Db</option>
+		<option value='3'>D</option>
+		<option value='4'>D#/Eb</option>
+		<option value='5'>E</option>
+		<option value='6'>F</option>
+		<option value='7'>F#/Gb</option>
+		<option value='8'>G</option>
+		<option value='9'>G#/Ab</option>
+		<option value='10'>A</option>
+		<option value='11'>A#/Bb</option>
+		<option value='12'>B</option>
+	</select>
+	<label for="destinationKey">Destination Key:</label>
+	<select name="destinationKey" id="destinationKey">
+		<!-- <option value='numbers'>Numbers</option> -->
+		<option value='1'>C</option>
+		<option value='2'>C#/Db</option>
+		<option value='3'>D</option>
+		<option value='4'>D#/Eb</option>
+		<option value='5' selected='selected'>E</option>
+		<option value='6'>F</option>
+		<option value='7'>F#/Gb</option>
+		<option value='8'>G</option>
+		<option value='9'>G#/Ab</option>
+		<option value='10'>A</option>
+		<option value='11'>A#/Bb</option>
+		<option value='12'>B</option>
+	</select>
+
+
+<label for="processText">Transpose:
+<button class="processText">Change it up!</button>
+</div>
+<div class="sourceContainer"><textarea cols='80' rows='120' class="source">[C][C#][Db][D][D#][Eb][E][F][F#][Gb][G][G#][Ab][A][A#][Bb][B]<br>[C%][C#%][Db%][D%][D#%][Eb%][E%][F%][F#%][Gb%][G%][G#%][Ab%][A%][A#%][Bb%][B%]</textarea>
+</div>
+
+<textarea cols='80' rows='120' class="destination" >And it shows up processed here</textarea>
+</body>
