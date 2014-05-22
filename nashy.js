@@ -113,12 +113,19 @@ function processChord(chord, original, destination){
     processed += transpose(chord[0], original, destination);
 
   for(var i=processed.length; i<chord.length; i++){
-    if (chord[i] === '/'){
-      processed += '/' + transpose(chord[i+1], original, destination);
-      i++;
+    
+    switch(chord[i]){
+      case '/':
+        processed += '/' + transpose(chord[i+1], original, destination);
+        i++;
+        break;
+      case '#':
+        break;
+      case 'b':
+        break;
+      default:
+        processed += chord[i];
     }
-    else
-      processed += chord[i];
   }
 
   return processed;
