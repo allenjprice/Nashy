@@ -1,3 +1,11 @@
+// Nashy.js
+// version 0.1.0
+// https://github.com/allenjprice/Nashy
+// Allen J Price
+// twitter: @allenjprice
+
+
+
 var pitches = {};
   //pitch dictionary via numerical index. not zero based. I might regret that.
   pitches['_1'] = ['C', 'B#'];
@@ -105,6 +113,7 @@ function processText(text, original, destination){
 
   function processChord(chord){
     var processed = '';
+
     if(chord[1] === '#' || chord[1] === 'b'){
       processed += transpose(chord.slice(0,2));
     }
@@ -150,7 +159,6 @@ function processText(text, original, destination){
         
 
         for (var j=lastChordIndex; j<(i - cumulativeChordLength); j++){
-          console.log("spaces for loop hit");
           chordLine += ' ';
         }
 
