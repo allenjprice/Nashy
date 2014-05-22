@@ -40,104 +40,106 @@ pitches['_12'] = ['B', 'Cb'];
     // pitches['cFlat'] = pitches._12[1];
      
 
-//search through the pitches object for the given chord, return its "index" in the chord dictionary
-function findChordByName(chord){
-  var counter = 1;
-  for (counter; counter <= 12; counter++){
-    for(var i=0; i<pitches['_' + counter].length; i++){
-      if (chord === pitches['_' + counter][i]){
-        return counter;
+function processText(text, original, destination){
+
+  //search through the pitches object for the given chord, return its "index" in the chord dictionary
+  function findChordByName(chord){
+    var counter = 1;
+    for (counter; counter <= 12; counter++){
+      for(var i=0; i<pitches['_' + counter].length; i++){
+        if (chord === pitches['_' + counter][i]){
+          return counter;
+        }
       }
     }
   }
-}
 
-//hard-coded values because the semitone pattern won't ever change
-//only call from getDiatonicScale for now; it can't wraparound for intervals larger than 2
-function advanceIndex(index, interval){
-  
-  if(index === 11){
-    if (interval === 2)
-      return 1;
-    else
-      return 13;
-  }
-  else if (index === 12){
-    if (interval === 2)
-      return 2;
-    else
-      return 1;
-  }
-  else
-    return index + interval;
-}
-
-//given a key, output an object containing the major scale for that key
-function getDiatonicScale(key){
-  //use interval pattern to derive scale: WWhWWWh
-  var pitchIndex = findChordByName(key);
-  var scale = {};
-
-  for(var i=1; i<8; i++){
-    scale['_' + i] = pitches['_' + pitchIndex];
-    if (i === 3){
-      pitchIndex = advanceIndex(pitchIndex, 1);
-    }
-    else{
-      pitchIndex = advanceIndex(pitchIndex, 2);
-    }
-  }
-  return scale;
-}
-
-//given a chord name, transpose it from original key to destination key.
-function transpose(chord, original, destination){
-  var chordIndex = findChordByName(chord);
-  var interval = original - destination;
-  var invertedInterval = interval + 12;
-  var result = pitches['_' + (chordIndex - interval)];
-  
-  if (!result){
-    result = pitches['_' + (chordIndex - invertedInterval)];
-  }
-  console.log("transpose.result: " + result);
-  return result[0];
-}
-
-function processChord(chord, original, destination){
-  var processed = '';
-  if(chord[1] === '#' || chord[1] === 'b'){
-    processed += transpose(chord.slice(0,2), original, destination);
-  }
-  else
-    processed += transpose(chord[0], original, destination);
-
-  for(var i=processed.length; i<chord.length; i++){
+  //hard-coded values because the semitone pattern won't ever change
+  //only call from getDiatonicScale for now; it can't wraparound for intervals larger than 2
+  function advanceIndex(index, interval){
     
-    switch(chord[i]){
-      case '/':
-        processed += '/' + transpose(chord[i+1], original, destination);
-        i++;
-        break;
-      case '#':
-        break;
-      case 'b':
-        break;
-      default:
-        processed += chord[i];
+    if(index === 11){
+      if (interval === 2)
+        return 1;
+      else
+        return 13;
     }
+    else if (index === 12){
+      if (interval === 2)
+        return 2;
+      else
+        return 1;
+    }
+    else
+      return index + interval;
   }
 
-  return processed;
+  //given a key, output an object containing the major scale for that key
+  function getDiatonicScale(key){
+    //use interval pattern to derive scale: WWhWWWh
+    var pitchIndex = findChordByName(key);
+    var scale = {};
 
-}
+    for(var i=1; i<8; i++){
+      scale['_' + i] = pitches['_' + pitchIndex];
+      if (i === 3){
+        pitchIndex = advanceIndex(pitchIndex, 1);
+      }
+      else{
+        pitchIndex = advanceIndex(pitchIndex, 2);
+      }
+    }
+    return scale;
+  }
 
-function findNextToken(token, index, text){
-  return text.indexOf(token, index);
-}
+  //given a chord name, transpose it from original key to destination key.
+  function transpose(chord){
+    var chordIndex = findChordByName(chord);
+    var interval = original - destination;
+    var invertedInterval = interval + 12;
+    var result = pitches['_' + (chordIndex - interval)];
+    
+    if (!result){
+      result = pitches['_' + (chordIndex - invertedInterval)];
+    }
+    return result[0];
+  }
 
-function processText(text, originalKey, destinationKey){
-  
+  function processChord(chord){
+    var processed = '';
+    if(chord[1] === '#' || chord[1] === 'b'){
+      processed += transpose(chord.slice(0,2));
+    }
+    else
+      processed += transpose(chord[0]);
+
+    for(var i=processed.length; i<chord.length; i++){
+      console.log("chord: " + chord);
+      console.log("i: " + i + ", chord[i]: " + chord[i]);
+      switch(chord[i]){
+        case '/':
+          processed += '/' + transpose(chord[i+1]);
+          i++;
+          break;
+        case '#':
+          processed += '';
+          break;
+        case 'b':
+          processed += '';
+          break;
+        default:
+          processed += chord[i];
+      }
+    }
+
+    return processed;
+
+  }
+
+  function findNextToken(token, index, text){
+    return text.indexOf(token, index);
+  }
+
   var chordLine = '';
   var lyricLine = '';
 
@@ -148,7 +150,7 @@ function processText(text, originalKey, destinationKey){
       }
 
       var endBracket = findNextToken(']', i, text);
-      chordLine += processChord(text.slice(i+1, endBracket), originalKey, destinationKey);
+      chordLine += processChord(text.slice(i+1, endBracket), original, destination);
       i = endBracket;
     }
     else
