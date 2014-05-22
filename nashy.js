@@ -142,19 +142,26 @@ function processText(text, original, destination){
     var chordLine = '';
     var lyricLine = '';
 
+    var cumulativeChordLength = 0;
+
     for (var lineIdx = 0; lineIdx < line.length; lineIdx++){
       if (line[lineIdx] === '['){
-        for(var spaces=0; spaces<lineIdx; spaces++){
-          chordLine += '-';
+        for(var spaces=0; spaces<(lineIdx - cumulativeChordLength); spaces++){
+          chordLine += ' ';
         }
 
         var endBracket = findNextToken(']', lineIdx, line);
         chordLine += processChord(line.slice(lineIdx+1, endBracket));
+        cumulativeChordLength += (lineIdx + endBracket);
         lineIdx = endBracket;
+        console.log("lineIdx: " + lineIdx);
+        console.log("cumulativeChordLength: " + cumulativeChordLength);
+        console.log("for a difference of: " + (lineIdx - cumulativeChordLength));
       }
       else
         lyricLine += line[lineIdx];
     }
+    console.log("new line!");
     return chordLine + '\n' + lyricLine + '\n';
   }
 //actual main function code. finally.
@@ -164,9 +171,8 @@ function processText(text, original, destination){
     finalAnswer += processLine(lines[i]);
   }
   return finalAnswer;
-  //return processLine("[C]Your mom is a [G]cow.");
 }
-
+//event handler
 $(document).ready(function(){
     $('.processText').click(function(){
 
