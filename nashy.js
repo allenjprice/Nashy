@@ -1,4 +1,4 @@
-  var pitches = {};
+var pitches = {};
   //pitch dictionary via numerical index. not zero based. I might regret that.
   pitches['_1'] = ['C', 'B#'];
   pitches['_2'] = ['C#', 'Db'];
@@ -116,7 +116,7 @@ function processText(text, original, destination){
       // console.log("i: " + i + ", chord[i]: " + chord[i]);
       switch(chord[i]){
         case '/':
-          processed += '/' + transpose(chord[i+1]);
+          processed += '/' + transpose(chord[i+1]); //POTENTIALLY WON'T WORK FOR /F# AND THE LIKE
           i++;
           break;
         case '#':
@@ -141,29 +141,32 @@ function processText(text, original, destination){
   function processLine(line){
     var chordLine = '';
     var lyricLine = '';
-
     var cumulativeChordLength = 0;
+    var lastChordIndex = 0;
 
-    for (var lineIdx = 0; lineIdx < line.length; lineIdx++){
-      if (line[lineIdx] === '['){
-        for(var spaces=0; spaces<(lineIdx - cumulativeChordLength); spaces++){
+    for (var i=0; i<line.length; i++){
+      if(line[i] === '['){
+        var endBracket = findNextToken(']', i, line);
+        
+
+        for (var j=lastChordIndex; j<(i - cumulativeChordLength); j++){
+          console.log("spaces for loop hit");
           chordLine += ' ';
         }
 
-        var endBracket = findNextToken(']', lineIdx, line);
-        chordLine += processChord(line.slice(lineIdx+1, endBracket));
-        cumulativeChordLength += (lineIdx + endBracket);
-        lineIdx = endBracket;
-        console.log("lineIdx: " + lineIdx);
-        console.log("cumulativeChordLength: " + cumulativeChordLength);
-        console.log("for a difference of: " + (lineIdx - cumulativeChordLength));
+        currChord = line.slice(i+1, endBracket)
+        cumulativeChordLength += (currChord.length + 2);
+        chordLine += processChord(currChord);
+        lastChordIndex = chordLine.length;
+        i = endBracket;
       }
       else
-        lyricLine += line[lineIdx];
+        lyricLine += line[i];
     }
-    console.log("new line!");
     return chordLine + '\n' + lyricLine + '\n';
+
   }
+
 //actual main function code. finally.
   var lines = text.split('\n');
   var finalAnswer = '';
