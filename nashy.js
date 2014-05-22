@@ -77,16 +77,15 @@ function processText(text, original, destination){
   //given a key, output an object containing the major scale for that key
   function getDiatonicScale(key){
     //use interval pattern to derive scale: WWhWWWh
-    var pitchIndex = findChordByName(key);
     var scale = {};
 
     for(var i=1; i<8; i++){
-      scale['_' + i] = pitches['_' + pitchIndex];
+      scale['_' + i] = pitches['_' + key];
       if (i === 3){
-        pitchIndex = advanceIndex(pitchIndex, 1);
+        key = advanceIndex(key, 1);
       }
       else{
-        pitchIndex = advanceIndex(pitchIndex, 2);
+        key = advanceIndex(key, 2);
       }
     }
     return scale;
@@ -114,8 +113,8 @@ function processText(text, original, destination){
       processed += transpose(chord[0]);
 
     for(var i=processed.length; i<chord.length; i++){
-      console.log("chord: " + chord);
-      console.log("i: " + i + ", chord[i]: " + chord[i]);
+      // console.log("chord: " + chord);
+      // console.log("i: " + i + ", chord[i]: " + chord[i]);
       switch(chord[i]){
         case '/':
           processed += '/' + transpose(chord[i+1]);
