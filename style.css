@@ -7,7 +7,7 @@ textarea.source {
 	font-family: monospace;
 	border: 1px dashed black;
 }
-div.key-select{
+div.controls-group{
 	display: block;
 	padding-bottom: 15px;
 }
@@ -16,7 +16,7 @@ div.source:focus{
 	outline: 0;
 }
 
-.destination {
+textarea.destination {
 	float: right;
 	border: 1px solid black;
 	width: 40%;
