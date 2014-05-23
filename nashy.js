@@ -5,7 +5,6 @@
 // twitter: @allenjprice
 
 
-
 var pitches = {};
   //pitch dictionary via numerical index. not zero based. I might regret that.
   pitches['_1'] = ['C', 'B#'];
@@ -121,11 +120,9 @@ function processText(text, original, destination){
       processed += transpose(chord[0]);
 
     for(var i=processed.length; i<chord.length; i++){
-      // console.log("chord: " + chord);
-      // console.log("i: " + i + ", chord[i]: " + chord[i]);
       switch(chord[i]){
         case '/':
-          processed += '/' + transpose(chord[i+1]); //POTENTIALLY WON'T WORK FOR /F# AND THE LIKE
+          processed += '/' + transpose(chord.slice(i+1)); 
           i++;
           break;
         case '#':
