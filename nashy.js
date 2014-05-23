@@ -119,17 +119,26 @@ function processText(text, original, destination){
     else
       processed += transpose(chord[0]);
 
-    for(var i=processed.length; i<chord.length; i++){
+    var chordEnd = processed.length;
+    console.log("chord: " + chord);
+    console.log("chordEnd before: " + chordEnd);
+    console.log("processed[chordEnd]: " + processed[chordEnd-1]);
+    if (processed[chordEnd-1] === '#' || processed[chordEnd-1] === 'b'){
+      chordEnd--;
+    }
+
+
+    for(var i=chordEnd; i<chord.length; i++){
       switch(chord[i]){
         case '/':
           processed += '/' + transpose(chord.slice(i+1)); 
           i++;
           break;
         case '#':
-          processed += '';
+          //processed += '';
           break;
         case 'b':
-          processed += '';
+          //processed += '';
           break;
         default:
           processed += chord[i];

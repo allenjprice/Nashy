@@ -1,5 +1,6 @@
 #TODO
-- sharp/flat chords in output skip over the first char of their dim/min/7ths, etc.... BUT ONLY SOMETIMES?
+- no original key works besides C, apparently
+
 - rename divs with some formula: "key-select-group", for instance
 - div around the two textareas called 'text-area-group' or something like that (keep a top-level name with the inside elements), give it a max-width property
 - size textareas with css instead of rows/col attributes
