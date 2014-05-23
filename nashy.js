@@ -101,6 +101,8 @@ function processText(text, original, destination){
   function transpose(chord){
     var chordIndex = findChordByName(chord);
     var interval = original - destination;
+    if (interval > 0)
+      interval -= 12;
     var invertedInterval = interval + 12;
     var result = pitches['_' + (chordIndex - interval)];
     
@@ -120,9 +122,7 @@ function processText(text, original, destination){
       processed += transpose(chord[0]);
 
     var chordEnd = processed.length;
-    console.log("chord: " + chord);
-    console.log("chordEnd before: " + chordEnd);
-    console.log("processed[chordEnd]: " + processed[chordEnd-1]);
+
     if (processed[chordEnd-1] === '#' || processed[chordEnd-1] === 'b'){
       chordEnd--;
     }
