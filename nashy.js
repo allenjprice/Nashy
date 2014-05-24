@@ -46,7 +46,25 @@ var PITCHES = {};
     PITCHES['cFlat'] = PITCHES._12[1];
 
 //SCALES: Dictionary containing the diatonic pitches for each key.
-var SCALES = {};
+var SCALES = {
+  c: {},
+  cSharp: {},
+  dFlat: {},
+  d: {},
+  dSharp: {},
+  eFlat: {},
+  e: {},
+  f: {},
+  fSharp: {},
+  gFlat: {},
+  g: {},
+  gSharp: {},
+  aFlat: {},
+  a: {},
+  aSharp: {},
+  bFlat: {},
+  b: {}
+};
 
   SCALES['c']['_1'] = PITCHES['c']; 
   SCALES['c']['_2'] = PITCHES['cSharp']; 
@@ -331,10 +349,6 @@ function processText(text, original, destination){
     }
     return scale;
   }
-  //getDiatonicPitch: given a pitch index and its key, return the proper enharmonic pitch for that key
-  function getDiatonicPitch(key, pitch){
-
-  } 
 
   //given a chord name, transpose it from original key to destination key.
   function transpose(chord){
