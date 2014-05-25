@@ -18,7 +18,7 @@ var PITCHES = {};
   PITCHES['_10'] = ['A', 'G*'];
   PITCHES['_11'] = ['A#', 'Bb'];
   PITCHES['_12'] = ['B', 'Cb'];
-    // //all the PITCHES?
+    // pitches by name [0 index group]
     PITCHES['c'] = PITCHES['_1'][0];
     PITCHES['cSharp'] = PITCHES._2[0];
     PITCHES['d'] = PITCHES._3[0];
@@ -31,7 +31,7 @@ var PITCHES = {};
     PITCHES['a'] = PITCHES._10[0];
     PITCHES['aSharp'] = PITCHES._11[0];
     PITCHES['b'] = PITCHES._12[0];
-    //and now for flats and weird doublesharps
+    // pitches by name [1 index group]
     PITCHES['bSharp'] = PITCHES._1[1];
     PITCHES['dFlat'] = PITCHES._2[1];
     PITCHES['cDoubleSharp'] = PITCHES._3[1];
@@ -287,21 +287,72 @@ var SCALES = {
   SCALES['b']['_11'] = PITCHES['aSharp']; //7
   SCALES['b']['_12'] = PITCHES['b']; //1
 
+var originalKeyX = 'c';
+var destinationKeyX = 'b';
 
 function processText(text, original, destination){
 
-  //search through the PITCHES object for the given pitch, return its address in the PITCHES dictionary
-  function findExactPitchByName(chord){
-    var counter = 1;
-    for (counter; counter <= 12; counter++){
-      for(var i=0; i<PITCHES['_' + counter].length; i++){
-        if (chord === PITCHES['_' + counter][i]){
-          return [counter, i];
-        }
-      }
+
+
+  function findIndexX(key){
+    var keyIndex;
+    switch (key){
+      case 'c':
+        keyIndex = 1;
+        break;
+      case 'cSharp':
+        keyIndex = 2;
+        break;
+      case 'dFlat':
+        keyIndex = 2;
+        break;
+      case 'd':
+        keyIndex = 3;
+        break;
+      case 'dSharp':
+        keyIndex = 4;
+        break;
+      case 'eFlat':
+        keyIndex = 4;
+        break;
+      case 'e':
+        keyIndex = 5;
+        break;
+      case 'f':
+        keyIndex = 6;
+        break;
+      case 'fSharp':
+        keyIndex = 7;
+        break;
+      case 'gFlat':
+        keyIndex = 7;
+        break;
+      case 'g':
+        keyIndex = 8;
+        break;
+      case 'gSharp':
+        keyIndex = 9;
+        break;
+      case 'aFlat':
+        keyIndex = 9;
+        break;
+      case 'a':
+        keyIndex = 10;
+        break;
+      case 'aSharp':
+        keyIndex = 11;
+        break;
+      case 'bFlat':
+        keyIndex = 11;
+        break;
+      case 'b':
+        keyIndex = 12;
+        break;
     }
+    return keyIndex;
   }
 
+    //search through the PITCHES object for the given chord, return its index in the PITCHES dictionary
   function findChordByName(chord){
     var counter = 1;
     for (counter; counter <= 12; counter++){
@@ -313,42 +364,79 @@ function processText(text, original, destination){
     }
   }
 
-  //hard-coded values because the semitone pattern won't ever change
-  //only call from getDiatonicScale for now; it can't wraparound for intervals larger than 2
-  function advanceIndex(index, interval){
-    
-    if(index === 11){
-      if (interval === 2)
-        return 1;
-      else
-        return 13;
-    }
-    else if (index === 12){
-      if (interval === 2)
-        return 2;
-      else
-        return 1;
-    }
-    else
-      return index + interval;
-  }
+  function transposeX(chord){
+    //get originalKeyX's index in the PITCHES object
+    //get destinationKeyX's index in the PITCHES object
+    //calculate the interval/inverted interval
+    //if user puts in diatonic chord:
+      //return SCALES[destinationKeyX][originalIndexX - interval] (and invert if necessary)
+    //else if user chord is not diatonic:
+      //find chord's index in PITCHES object
+      //return PITCHES[chordIndex - interval][0];
+    //else
+      //return '!!!';
+    var originalIndexX = findIndexX(originalKeyX);
+    var destinationIndexX = findIndexX(destinationKeyX);
+    var interval = originalIndexX - destinationIndexX;
+    if (interval>0)
+      interval -= 12;
+    var invertedInterval = interval + 12;
+    var chordIndexX = findChordByName(chord);
 
-  //given a key, output an object containing the major scale for that key
-  function getDiatonicScale(key){
-    //use interval pattern to derive scale: WWhWWWh
-    var scale = {};
-
-    for(var i=1; i<8; i++){
-      scale['_' + i] = PITCHES['_' + key];
-      if (i === 3){
-        key = advanceIndex(key, 1);
-      }
-      else{
-        key = advanceIndex(key, 2);
+    for (var i=1; i<=12; i++){
+      if (SCALES[originalKeyX]['_' + i] === chord){
+        var result = SCALES[destinationKeyX]['_' + (chordIndexX - interval)];
       }
     }
-    return scale;
+
+    if (!result){
+      
+      var result = PITCHES['_' + (chordIndexX - interval)][0];
+    }
+
+    return result;
   }
+
+console.log(transposeX('Db'));
+
+
+
+        // //hard-coded values because the semitone pattern won't ever change
+        // //only call from getDiatonicScale for now; it can't wraparound for intervals larger than 2
+        // function advanceIndex(index, interval){
+          
+        //   if(index === 11){
+        //     if (interval === 2)
+        //       return 1;
+        //     else
+        //       return 13;
+        //   }
+        //   else if (index === 12){
+        //     if (interval === 2)
+        //       return 2;
+        //     else
+        //       return 1;
+        //   }
+        //   else
+        //     return index + interval;
+        // }
+
+        // //given a key, output an object containing the major scale for that key
+        // function getDiatonicScale(key){
+        //   //use interval pattern to derive scale: WWhWWWh
+        //   var scale = {};
+
+        //   for(var i=1; i<8; i++){
+        //     scale['_' + i] = PITCHES['_' + key];
+        //     if (i === 3){
+        //       key = advanceIndex(key, 1);
+        //     }
+        //     else{
+        //       key = advanceIndex(key, 2);
+        //     }
+        //   }
+        //   return scale;
+        // }
 
   //given a chord name, transpose it from original key to destination key.
   function transpose(chord){
