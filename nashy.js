@@ -290,7 +290,7 @@ var SCALES = {
 var originalKeyX = 'c';
 var destinationKeyX = 'b';
 
-function processText(text, original, destination){
+function processText(text, originalKeyX, destinationKeyX){
 
 
 
@@ -365,102 +365,30 @@ function processText(text, original, destination){
   }
 
   function transposeX(chord){
-    //get originalKeyX's index in the PITCHES object
-    //get destinationKeyX's index in the PITCHES object
-    //calculate the interval/inverted interval
-    //if user puts in diatonic chord:
-      //return SCALES[destinationKeyX][originalIndexX - interval] (and invert if necessary)
-    //else if user chord is not diatonic:
-      //find chord's index in PITCHES object
-      //return PITCHES[chordIndex - interval][0];
-    //else
-      //return '!!!';
-    var originalIndexX = findIndexX(originalKeyX);
-    var destinationIndexX = findIndexX(destinationKeyX);
-    var interval = originalIndexX - destinationIndexX;
+
+    var interval = findIndexX(originalKeyX) - findIndexX(destinationKeyX);
     if (interval>0)
       interval -= 12;
     var invertedInterval = interval + 12;
-    var chordIndexX = findChordByName(chord);
+    // var chordIndexX = findChordByName(chord);
+    var difference = findChordByName(chord) - interval;
+    var differenceInverted = findChordByName(chord) - invertedInterval;
 
-    for (var i=1; i<=12; i++){
-      if (SCALES[originalKeyX]['_' + i] === chord){
-        var result = SCALES[destinationKeyX]['_' + (chordIndexX - interval)];
-      }
-    }
-
-    if (!result){
-      
-      var result = PITCHES['_' + (chordIndexX - interval)][0];
-    }
-
+    var result = SCALES[destinationKeyX]['_' + difference];
+    if (!result)
+      result = SCALES[destinationKeyX]['_' + differenceInverted];
     return result;
   }
 
-console.log(transposeX('Db'));
-
-
-
-        // //hard-coded values because the semitone pattern won't ever change
-        // //only call from getDiatonicScale for now; it can't wraparound for intervals larger than 2
-        // function advanceIndex(index, interval){
-          
-        //   if(index === 11){
-        //     if (interval === 2)
-        //       return 1;
-        //     else
-        //       return 13;
-        //   }
-        //   else if (index === 12){
-        //     if (interval === 2)
-        //       return 2;
-        //     else
-        //       return 1;
-        //   }
-        //   else
-        //     return index + interval;
-        // }
-
-        // //given a key, output an object containing the major scale for that key
-        // function getDiatonicScale(key){
-        //   //use interval pattern to derive scale: WWhWWWh
-        //   var scale = {};
-
-        //   for(var i=1; i<8; i++){
-        //     scale['_' + i] = PITCHES['_' + key];
-        //     if (i === 3){
-        //       key = advanceIndex(key, 1);
-        //     }
-        //     else{
-        //       key = advanceIndex(key, 2);
-        //     }
-        //   }
-        //   return scale;
-        // }
-
-  //given a chord name, transpose it from original key to destination key.
-  function transpose(chord){
-    var chordIndex = findChordByName(chord);
-    var interval = original - destination;
-    if (interval > 0)
-      interval -= 12;
-    var invertedInterval = interval + 12;
-    var result = PITCHES['_' + (chordIndex - interval)];
-    
-    if (!result){
-      result = PITCHES['_' + (chordIndex - invertedInterval)];
-    }
-    return result[0];
-  }
-
+  
   function processChord(chord){
     var processed = '';
 
     if(chord[1] === '#' || chord[1] === 'b'){
-      processed += transpose(chord.slice(0,2));
+      processed += transposeX(chord.slice(0,2));
     }
     else
-      processed += transpose(chord[0]);
+      processed += transposeX(chord[0]);
 
     var chordEnd = processed.length;
 
@@ -472,7 +400,7 @@ console.log(transposeX('Db'));
     for(var i=chordEnd; i<chord.length; i++){
       switch(chord[i]){
         case '/':
-          processed += '/' + transpose(chord.slice(i+1)); 
+          processed += '/' + transposeX(chord.slice(i+1)); 
           i++;
           break;
         case '#':
