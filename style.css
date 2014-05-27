@@ -1,25 +1,18 @@
-div.sourceContainer {
+div.source-container {
 	float:left;
 	width: 40%;
 	font-family: sans-serif;
 }
 textarea.source {
-	font-family: monospace;
-	border: 1px dashed black;
+	font-family: 'Source Code Pro';
+  font-size: 1em;
 }
-div.key-select{
+div.controls-group{
 	display: block;
 	padding-bottom: 15px;
 }
 
-div.source:focus{
-	outline: 0;
-}
-
-.destination {
-	float: right;
-	border: 1px solid black;
-	width: 40%;
-	padding-right: 10%;
-	font-family: monospace;
+textarea.destination {
+  font-family: 'Source Code Pro';
+  font-size: 1em;
 }
