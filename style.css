@@ -1,18 +1,7 @@
-div.source-container {
-	float:left;
-	width: 40%;
-	font-family: sans-serif;
-}
-textarea.source {
-	font-family: 'Source Code Pro';
-  font-size: 1em;
-}
-div.controls-group{
-	display: block;
-	padding-bottom: 15px;
-}
 
-textarea.destination {
+textarea {
   font-family: 'Source Code Pro';
   font-size: 1em;
+  overflow: auto;
 }
+
