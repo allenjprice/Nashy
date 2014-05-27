@@ -456,12 +456,13 @@ function processText(text, originalKeyX, destinationKeyX){
   }
   return finalAnswer;
 }
+
 //event handler
 $(document).ready(function(){
     $('.process-text').click(function(){
 
     $('.destination').val(processText($('.source').val(), $('#original-key').val(), $('#destination-key').val()));
-    // $('.destination').multiline(processText($('.source').val(), $('#originalKey').val(), $('#destinationKey').val()));
+
   });
 });
 
