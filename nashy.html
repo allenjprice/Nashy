@@ -2,73 +2,113 @@
 
 <html>
 <head>
-	<title>Nashy</title>
-	<link rel="stylesheet" type="text/css" href="style.css" />
+  <title>Nashy</title>
+  <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <script src="nashy.js" type="text/javascript"> </script>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 </head>
 
-<script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="nashy.js" type="text/javascript"> </script>
-
 <body>
-
-<h1>Nashy</h1>
-<h5>An app for lazy and/or brilliant musicians</h5>
-
-<div class = "controls-group">
-	<label for="original-key">Original Key:</label>
-	<select name="original-key" id="original-key">
-		<!-- <option value='numbers'>Numbers</option> -->
-		<option value='c' selected='selected'>C</option>
-		<option value='cSharp'>C#</option>
-    <option value='dFlat'>Db</option>
-		<option value='d'>D</option>
-    <option value='dSharp'>D#</option>
-		<option value='eFlat'>Eb</option>
-		<option value='e'>E</option>
-		<option value='f'>F</option>
-    <option value='fSharp'>F#</option>
-		<option value='gFlat'>Gb</option>
-		<option value='g'>G</option>
-    <option value='gSharp'>G#</option>
-		<option value='aFlat'>Ab</option>
-		<option value='a'>A</option>
-    <option value='aSharp'>A#</option>
-		<option value='bFlat'>Bb</option>
-		<option value='b'>B</option>
-	</select>
-	<label for="destination-key">Destination Key:</label>
-	<select name="destination-key" id="destination-key">
-		<!-- <option value='numbers'>Numbers</option> -->
-    <option value='c' selected='selected'>C</option>
-    <option value='cSharp'>C#</option>
-    <option value='dFlat'>Db</option>
-    <option value='d'>D</option>
-    <option value='dSharp'>D#</option>
-    <option value='eFlat'>Eb</option>
-    <option value='e'>E</option>
-    <option value='f'>F</option>
-    <option value='fSharp'>F#</option>
-    <option value='gFlat'>Gb</option>
-    <option value='g'>G</option>
-    <option value='gSharp'>G#</option>
-    <option value='aFlat'>Ab</option>
-    <option value='a'>A</option>
-    <option value='aSharp'>A#</option>
-    <option value='bFlat'>Bb</option>
-    <option value='b'>B</option>
-	</select>
-
-
-<label for="process-text">Transpose:
-<button class="process-text">Nash It!</button>
+<div class = "container">
+  <div class="page-header">
+    <h1>Nashy <small>A tool for musicians.</small><button class="btn btn-primary btn-lg pull-right" data-toggle="modal" data-target="#instructions">How to use Nashy</button></h1>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="instructions" tabindex="-1" role="dialog" aria-labelledby="instructionsLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="instructionsLabel">How to use Nashy</h4>
+      </div>
+      <div class="modal-body">
+        <ul>
+          <li>Lyrics and chords go in the editor on the left.</li>
+          <li>Put your chords in [brackets], and place them in-line within your lyrics, like this:
+<pre>[C]You and I and [Em7]George 
+went [F]strolling through the park one [C]day</pre></li>
+          <li>Choose your original key and your destination key from the menu</li>
+          <li>Click the "Nash it!" button to make your musician-ready chord chart!</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Got it!</button>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="source-container">
-<textarea cols='80' rows='120' class="source">[C]This is a [G]sample song!
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+        <label for="original-key">Original Key:</label>
+        <select name="original-key" id="original-key" class="form-control input-sm">
+          <!-- <option value='numbers'>Numbers</option> -->
+          <option value='c'>C</option>
+          <option value='cSharp'>C#</option>
+          <option value='dFlat'>Db</option>
+          <option value='d'>D</option>
+          <option value='dSharp'>D#</option>
+          <option value='eFlat'>Eb</option>
+          <option value='e'>E</option>
+          <option value='f'>F</option>
+          <option value='fSharp'>F#</option>
+          <option value='gFlat'>Gb</option>
+          <option value='g'>G</option>
+          <option value='gSharp'>G#</option>
+          <option value='aFlat'>Ab</option>
+          <option value='a'>A</option>
+          <option value='aSharp'>A#</option>
+          <option value='bFlat'>Bb</option>
+          <option value='b'>B</option>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label for="destination-key">Destination Key:</label>
+        <select name="destination-key" id="destination-key" class="form-control input-sm">
+          <!-- <option value='numbers'>Numbers</option> -->
+          <option value='c'>C</option>
+          <option value='cSharp'>C#</option>
+          <option value='dFlat'>Db</option>
+          <option value='d'>D</option>
+          <option value='dSharp'>D#</option>
+          <option value='eFlat'>Eb</option>
+          <option value='e'>E</option>
+          <option value='f'>F</option>
+          <option value='fSharp'>F#</option>
+          <option value='gFlat'>Gb</option>
+          <option value='g'>G</option>
+          <option value='gSharp'>G#</option>
+          <option value='aFlat'>Ab</option>
+          <option value='a'>A</option>
+          <option value='aSharp'>A#</option>
+          <option value='bFlat'>Bb</option>
+          <option value='b'>B</option>
+        </select>
+      </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-2"><button class="btn btn-lg btn-block btn-primary process-text">Nash it!</button></div>
+    <div class="col-md-2"><button class="btn btn-lg btn-block btn-primary">Stash it!</button></div>
+  </div>
+</div>
+<div class="container"><hr></div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+          <textarea class="form-control source" rows="30">[C]This is a [G]sample song!
 Put [Am]chords in [Em7]brackets
 wherever they [F]fall in your [C]lyrics.</textarea>
+    </div>
+    <div class="col-md-6">
+      <textarea class="form-control destination" rows="30">And it shows up processed here</textarea>
+    </div>
+  </div>
 </div>
 
-<textarea cols='80' rows='120' class="destination" >And it shows up processed here</textarea>
 </body>

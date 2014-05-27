@@ -404,10 +404,8 @@ function processText(text, originalKeyX, destinationKeyX){
           i++;
           break;
         case '#':
-          //processed += '';
           break;
         case 'b':
-          //processed += '';
           break;
         default:
           processed += chord[i];
