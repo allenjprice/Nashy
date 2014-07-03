@@ -295,68 +295,20 @@ function processText(text, originalKeyX, destinationKeyX){
 
 
   function findIndexX(key){
-    var keyIndex;
-    switch (key){
-      case 'c':
-        keyIndex = 1;
-        break;
-      case 'cSharp':
-        keyIndex = 2;
-        break;
-      case 'dFlat':
-        keyIndex = 2;
-        break;
-      case 'd':
-        keyIndex = 3;
-        break;
-      case 'dSharp':
-        keyIndex = 4;
-        break;
-      case 'eFlat':
-        keyIndex = 4;
-        break;
-      case 'e':
-        keyIndex = 5;
-        break;
-      case 'f':
-        keyIndex = 6;
-        break;
-      case 'fSharp':
-        keyIndex = 7;
-        break;
-      case 'gFlat':
-        keyIndex = 7;
-        break;
-      case 'g':
-        keyIndex = 8;
-        break;
-      case 'gSharp':
-        keyIndex = 9;
-        break;
-      case 'aFlat':
-        keyIndex = 9;
-        break;
-      case 'a':
-        keyIndex = 10;
-        break;
-      case 'aSharp':
-        keyIndex = 11;
-        break;
-      case 'bFlat':
-        keyIndex = 11;
-        break;
-      case 'b':
-        keyIndex = 12;
-        break;
-    }
-    return keyIndex;
-  }
+    key = key.toUpperCase().replace("SHARP","#").replace("FLAT","b");
 
+    for ( var p = 1; p < 13; p ++ ) {
+      if ( PITCHES['_'+p].indexOf( key ) > -1 ) {
+        return p;
+      }
+    }
+  }
     //search through the PITCHES object for the given chord, return its index in the PITCHES dictionary
   function findChordByName(chord){
     var counter = 1;
     for (counter; counter <= 12; counter++){
-      for(var i=0; i<PITCHES['_' + counter].length; i++){
+      var numPitches = PITCHES['_' + counter].length;
+      for(var i=0; i<numPitches; i++){
         if (chord === PITCHES['_' + counter][i]){
           return counter;
         }
@@ -382,6 +334,7 @@ function processText(text, originalKeyX, destinationKeyX){
 
   
   function processChord(chord){
+    console.log(chord);
     var processed = '';
 
     if(chord[1] === '#' || chord[1] === 'b'){
