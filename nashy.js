@@ -66,18 +66,18 @@ var SCALES = {
   b: {}
 };
 
-  SCALES['c']['_1'] = PITCHES['c']; 
-  SCALES['c']['_2'] = PITCHES['cSharp']; 
-  SCALES['c']['_3'] = PITCHES['d']; 
-  SCALES['c']['_4'] = PITCHES['eFlat']; 
-  SCALES['c']['_5'] = PITCHES['e']; 
-  SCALES['c']['_6'] = PITCHES['f']; 
-  SCALES['c']['_7'] = PITCHES['fSharp']; 
-  SCALES['c']['_8'] = PITCHES['g']; 
-  SCALES['c']['_9'] = PITCHES['aFlat']; 
-  SCALES['c']['_10'] = PITCHES['a']; 
-  SCALES['c']['_11'] = PITCHES['bFlat']; 
-  SCALES['c']['_12'] = PITCHES['b']; 
+  SCALES['c']['_1'] = PITCHES['c'];
+  SCALES['c']['_2'] = PITCHES['cSharp'];
+  SCALES['c']['_3'] = PITCHES['d'];
+  SCALES['c']['_4'] = PITCHES['eFlat'];
+  SCALES['c']['_5'] = PITCHES['e'];
+  SCALES['c']['_6'] = PITCHES['f'];
+  SCALES['c']['_7'] = PITCHES['fSharp'];
+  SCALES['c']['_8'] = PITCHES['g'];
+  SCALES['c']['_9'] = PITCHES['aFlat'];
+  SCALES['c']['_10'] = PITCHES['a'];
+  SCALES['c']['_11'] = PITCHES['bFlat'];
+  SCALES['c']['_12'] = PITCHES['b'];
 
   SCALES['cSharp']['_1'] = PITCHES['bSharp'];
   SCALES['cSharp']['_2'] = PITCHES['cSharp'];
@@ -118,6 +118,7 @@ var SCALES = {
   SCALES['d']['_11'] = PITCHES['aSharp'];
   SCALES['d']['_12'] = PITCHES['b'];//6
 
+// this one has f double sharp, which is kinda evil.
   SCALES['dSharp']['_1'] = PITCHES['bSharp']; //6
   SCALES['dSharp']['_2'] = PITCHES['cSharp'];
   SCALES['dSharp']['_3'] = PITCHES['cDoubleSharp']; //7
@@ -137,21 +138,21 @@ var SCALES = {
   SCALES['eFlat']['_4'] = PITCHES['eFlat']; //1
   SCALES['eFlat']['_5'] = PITCHES['e'];
   SCALES['eFlat']['_6'] = PITCHES['f']; //2
-  SCALES['eFlat']['_7'] = PITCHES['fSharp']; 
+  SCALES['eFlat']['_7'] = PITCHES['fSharp'];
   SCALES['eFlat']['_8'] = PITCHES['g']; //3
   SCALES['eFlat']['_9'] = PITCHES['aFlat']; //4
   SCALES['eFlat']['_10'] = PITCHES['a'];
   SCALES['eFlat']['_11'] = PITCHES['bFlat'];//5
   SCALES['eFlat']['_12'] = PITCHES['b'];
 
-  SCALES['e']['_1'] = PITCHES['c'];  
+  SCALES['e']['_1'] = PITCHES['c'];
   SCALES['e']['_2'] = PITCHES['cSharp'];  //6
-  SCALES['e']['_3'] = PITCHES['d'];  
+  SCALES['e']['_3'] = PITCHES['d'];
   SCALES['e']['_4'] = PITCHES['dSharp'];  //7
   SCALES['e']['_5'] = PITCHES['e'];  //1
-  SCALES['e']['_6'] = PITCHES['f'];  
+  SCALES['e']['_6'] = PITCHES['f'];
   SCALES['e']['_7'] = PITCHES['fSharp'];  //2
-  SCALES['e']['_8'] = PITCHES['g'];  
+  SCALES['e']['_8'] = PITCHES['g'];
   SCALES['e']['_9'] = PITCHES['gSharp'];  //3
   SCALES['e']['_10'] = PITCHES['a']; //4
   SCALES['e']['_11'] = PITCHES['as'];
@@ -179,11 +180,11 @@ var SCALES = {
   SCALES['fSharp']['_7'] = PITCHES['fSharp'];   //1
   SCALES['fSharp']['_8'] = PITCHES['g'];
   SCALES['fSharp']['_9'] = PITCHES['gSharp'];   //2
-  SCALES['fSharp']['_10'] = PITCHES['a'];  
+  SCALES['fSharp']['_10'] = PITCHES['a'];
   SCALES['fSharp']['_11'] = PITCHES['aSharp'];  //3
   SCALES['fSharp']['_12'] = PITCHES['b'];  //4
 
-  SCALES['gFlat']['_1'] = PITCHES['c'];    
+  SCALES['gFlat']['_1'] = PITCHES['c'];
   SCALES['gFlat']['_2'] = PITCHES['dFlat'];    //5
   SCALES['gFlat']['_3'] = PITCHES['d'];
   SCALES['gFlat']['_4'] = PITCHES['eFlat'];    //6
@@ -205,7 +206,7 @@ var SCALES = {
   SCALES['g']['_7'] = PITCHES['fSharp'];  //7
   SCALES['g']['_8'] = PITCHES['g'];  //1
   SCALES['g']['_9'] = PITCHES['gSharp'];
-  SCALES['g']['_10'] = PITCHES['a']; //2 
+  SCALES['g']['_10'] = PITCHES['a']; //2
   SCALES['g']['_11'] = PITCHES['aSharp'];
   SCALES['g']['_12'] = PITCHES['b']; //3
 
@@ -238,7 +239,7 @@ var SCALES = {
   SCALES['a']['_1'] = PITCHES['c'];
   SCALES['a']['_2'] = PITCHES['cSharp'];  //3
   SCALES['a']['_3'] = PITCHES['d'];  //4
-  SCALES['a']['_4'] = PITCHES['dSharp']; 
+  SCALES['a']['_4'] = PITCHES['dSharp'];
   SCALES['a']['_5'] = PITCHES['e'];  //5
   SCALES['a']['_6'] = PITCHES['f'];
   SCALES['a']['_7'] = PITCHES['fSharp'];  //6
@@ -252,7 +253,7 @@ var SCALES = {
   SCALES['aSharp']['_2'] = PITCHES['cSharp'];
   SCALES['aSharp']['_3'] = PITCHES['cDoubleSharp'];   //3
   SCALES['aSharp']['_4'] = PITCHES['dSharp'];   //4
-  SCALES['aSharp']['_5'] = PITCHES['e'];   
+  SCALES['aSharp']['_5'] = PITCHES['e'];
   SCALES['aSharp']['_6'] = PITCHES['eSharp'];   //5
   SCALES['aSharp']['_7'] = PITCHES['fSharp'];
   SCALES['aSharp']['_8'] = PITCHES['fDoubleSharp'];   //6
@@ -332,7 +333,7 @@ function processText(text, originalKeyX, destinationKeyX){
     return result;
   }
 
-  
+
   function processChord(chord){
     console.log(chord);
     var processed = '';
@@ -353,7 +354,7 @@ function processText(text, originalKeyX, destinationKeyX){
     for(var i=chordEnd; i<chord.length; i++){
       switch(chord[i]){
         case '/':
-          processed += '/' + transposeX(chord.slice(i+1)); 
+          processed += '/' + transposeX(chord.slice(i+1));
           i++;
           break;
         case '#':
@@ -382,7 +383,7 @@ function processText(text, originalKeyX, destinationKeyX){
     for (var i=0; i<line.length; i++){
       if(line[i] === '['){
         var endBracket = findNextToken(']', i, line);
-        
+
 
         for (var j=lastChordIndex; j<(i - cumulativeChordLength); j++){
           chordLine += ' ';
@@ -418,4 +419,3 @@ $(document).ready(function(){
 
   });
 });
-
